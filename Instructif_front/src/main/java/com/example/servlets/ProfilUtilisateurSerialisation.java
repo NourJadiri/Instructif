@@ -7,6 +7,7 @@ import metiers.Eleve;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -14,7 +15,8 @@ public class ProfilUtilisateurSerialisation extends Serialisation{
     @Override
     public void serialize(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject container = new JsonObject();
-        Eleve eleve = (Eleve)request.getAttribute("eleve");
+        HttpSession session = request.getSession(false);
+        Eleve eleve = (Eleve)session.getAttribute("eleve");
         JsonObject jsonEleve = new JsonObject();
         boolean connexion = false;
 
