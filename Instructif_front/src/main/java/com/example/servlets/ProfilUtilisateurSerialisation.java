@@ -16,6 +16,7 @@ public class ProfilUtilisateurSerialisation extends Serialisation{
     public void serialize(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject container = new JsonObject();
         HttpSession session = request.getSession(false);
+
         Eleve eleve = (Eleve)session.getAttribute("eleve");
         JsonObject jsonEleve = new JsonObject();
         boolean connexion = false;

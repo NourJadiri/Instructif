@@ -238,7 +238,6 @@ public class Service {
         EtablissementDao etDao = new EtablissementDao();
         EducNetApi api = new EducNetApi();
         EleveDao elDao = new EleveDao();
-        Message msg = new Message();
         boolean etat = false;
         try {
             JpaUtil.creerContextePersistance();
@@ -247,10 +246,10 @@ public class Service {
                 result = api.getInformationLycee(code);
 
                 if (result == null) {
-                    msg.envoyerMail("rol@moi.com", eleve.getMail(), "Echec d'inscription", "L'inscription est un echec");
+                    Message.envoyerMail("rol@moi.com", eleve.getMail(), "Echec d'inscription", "L'inscription est un echec");
                 }
             }
-            if (result != null) {
+            else {
                 String uai = result.get(0);
                 String nom = result.get(1);
                 String nomCommune = result.get(4);
@@ -266,12 +265,12 @@ public class Service {
                 elDao.create(eleve);
                 JpaUtil.validerTransaction();
                 etat = true;
-                msg.envoyerMail("rol@moi.com", eleve.getMail(), "Confirmation d'inscription", "L'inscription est un succes");
+                Message.envoyerMail("rol@moi.com", eleve.getMail(), "Confirmation d'inscription", "L'inscription est un succes");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
-            msg.envoyerMail("rol@moi.com", eleve.getMail(), "Echec d'inscription", "L'inscription est un echec");
+            Message.envoyerMail("rol@moi.com", eleve.getMail(), "Echec d'inscription", "L'inscription est un echec");
         } finally {
             JpaUtil.fermerContextePersistance();
         }

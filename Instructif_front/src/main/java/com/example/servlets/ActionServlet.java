@@ -22,8 +22,16 @@ public class ActionServlet extends HttpServlet {
         response.setContentType("text/html");
         String todo = request.getParameter("todo");
         System.out.println("Trace : todo = " + todo);
-        new AuthentifierEleveAction().execute(request);
-        new ProfilUtilisateurSerialisation().serialize(request,response);
+        switch(todo){
+            case "connexion":
+                new AuthentifierEleveAction().execute(request);
+                new ProfilUtilisateurSerialisation().serialize(request,response);
+                break;
+            case "inscription":
+                new InscriptionEleveAction().execute(request);
+                new ProfilUtilisateurSerialisation().serialize(request, response);
+                break;
+        }
     }
 
     public void destroy() {
