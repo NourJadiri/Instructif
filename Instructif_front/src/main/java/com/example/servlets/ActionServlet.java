@@ -1,8 +1,6 @@
 package com.example.servlets;
 
 import dao.JpaUtil;
-import views.ProfilEleveSerialisation;
-import views.ProfilEnseignantSerialisation;
 
 import java.io.*;
 import javax.servlet.ServletException;
@@ -21,23 +19,22 @@ public class ActionServlet extends HttpServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession();
 
-        System.out.println("TEST Appel au servlet de login");
+        //System.out.println("TEST Appel au servlet de login");
         response.setContentType("text/html");
         String todo = request.getParameter("todo");
         System.out.println("Trace : todo = " + todo);
-
         switch(todo){
-            case "connexion-eleve":
+            case "connexion":
                 new AuthentifierEleveAction().execute(request);
-                new ProfilEleveSerialisation().serialize(request,response);
-                break;
-            case "connexion-enseignant":
-                new AuthentifierEnseignantAction().execute(request);
-                new ProfilEnseignantSerialisation().serialize(request, response);
+                new ProfilUtilisateurSerialisation().serialize(request,response);
                 break;
             case "inscription":
                 new InscriptionEleveAction().execute(request);
-                new ProfilEleveSerialisation().serialize(request, response);
+                new ProfilUtilisateurSerialisation().serialize(request, response);
+                break;
+            case "stats":
+                new StatsAction().execute(request);
+                new StatsSerialisation().serialize(request, response);
                 break;
         }
     }
