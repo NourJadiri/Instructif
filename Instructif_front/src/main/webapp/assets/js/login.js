@@ -34,6 +34,7 @@ $(document).ready(function() {
                     }
                     else if (propertyNames[1] === "intervenant"){
                         console.log(`Intervenant ${response.intervenant.prenom} connecté`);
+                        window.location.href = 'espace-intervenant.html'
                     }
                 }
                 else{

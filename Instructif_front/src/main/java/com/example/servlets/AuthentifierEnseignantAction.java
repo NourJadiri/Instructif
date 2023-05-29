@@ -19,7 +19,6 @@ public class AuthentifierEnseignantAction extends Action{
         }
         else{
             System.out.println("Echec de l'authentification");
-            session.setAttribute("intervenant", null);
         }
     }
 }

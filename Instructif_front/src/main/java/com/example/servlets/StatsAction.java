@@ -10,13 +10,12 @@ public class StatsAction extends Action{
 
     @Override
     public void execute(HttpServletRequest request) {
-        Service s = new Service();
         
-        long nbEleve = s.compterEleves();
-        long nbCours = s.compterCoursDuJours();
-        long nbDemandes = s.compterCoursTotal();
-        long nbIPS = s.compterElevesIpsBas(81);
-        List<Etablissement> etabEleves = s.listeTousEtablissements();
+        long nbEleve = sc.compterEleves();
+        long nbCours = sc.compterCoursDuJours();
+        long nbDemandes = sc.compterCoursTotal();
+        long nbIPS = sc.compterElevesIpsBas(81);
+        List<Etablissement> etabEleves = sc.listeTousEtablissements();
         
         request.setAttribute("nbEleve", nbEleve);
         request.setAttribute("nbCours", nbCours);
