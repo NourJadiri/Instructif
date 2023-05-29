@@ -19,10 +19,10 @@ public class ProfilUtilisateurSerialisation extends Serialisation{
 
         Eleve eleve = (Eleve)session.getAttribute("eleve");
         JsonObject jsonEleve = new JsonObject();
-        boolean connexion = false;
+        boolean success = false;
 
         if(eleve != null){
-            connexion = true;
+            success = true;
             jsonEleve.addProperty("id",eleve.getId());
             jsonEleve.addProperty("prenom",eleve.getPrenom());
             jsonEleve.addProperty("nom",eleve.getNom());
@@ -36,7 +36,9 @@ public class ProfilUtilisateurSerialisation extends Serialisation{
             jsonEleve.add("etablissement",jsonEtablissement);
         }
 
-        container.addProperty("connexion",connexion);
+        String operation = request.getParameter("todo");
+        container.addProperty(operation, success);
+
         container.add("eleve",jsonEleve);
 
         System.out.println(container);

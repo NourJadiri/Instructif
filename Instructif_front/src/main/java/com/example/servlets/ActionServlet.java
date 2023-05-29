@@ -17,6 +17,7 @@ public class ActionServlet extends HttpServlet {
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getSession();
 
         System.out.println("TEST Appel au servlet de login");
         response.setContentType("text/html");

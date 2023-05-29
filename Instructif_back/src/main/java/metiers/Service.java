@@ -271,6 +271,7 @@ public class Service {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
             Message.envoyerMail("rol@moi.com", eleve.getMail(), "Echec d'inscription", "L'inscription est un echec");
+            throw new RuntimeException(ex);
         } finally {
             JpaUtil.fermerContextePersistance();
         }

@@ -11,7 +11,7 @@ public class AuthentifierEleveAction extends Action{
 
     @Override
     public void execute(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");

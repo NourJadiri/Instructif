@@ -17,7 +17,8 @@ import java.util.Date;
 public class InscriptionEleveAction extends Action{
     @Override
     public void execute(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String firstName = request.getParameter("firstName");
@@ -32,17 +33,17 @@ public class InscriptionEleveAction extends Action{
         try {
             date = new SimpleDateFormat("yyyy/MM/dd").format(inputDateFormat.parse(date));
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            date = "2002/06/09";
         }
 
         try {
             eleve = new Eleve(lastName, firstName, date, email, password, sc.trouverNiveau(niveau));
-
             sc.inscriptionEleve(eleve, code);
-            session.setAttribute("eleve", eleve);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            eleve = null;
         }
+        session.setAttribute("eleve", eleve);
+
 
     }
 }
