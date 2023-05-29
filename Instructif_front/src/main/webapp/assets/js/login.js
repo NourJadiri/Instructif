@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    var checkedValue = "eleve";
+    $('input[name="accountOption"]').change(function() {
+        checkedValue = $('input[name="accountOption"]:checked').val();
+        console.log("Checked value: " + checkedValue);
+    });
     // Handle form submission
     $('#bouton-connexion').click(function(e) {
         e.preventDefault(); // Prevent the form from submitting normally
@@ -7,19 +12,29 @@ $(document).ready(function() {
         var email = $('#login').val();
         var password = $('#password').val();
 
+
+
         // Create an AJAX request
         $.ajax({
             type: 'POST',
-            url: 'action-servlet?todo=connexion', // Replace with the correct URL to your Java EE servlet
+            url: `action-servlet?todo=connexion-${checkedValue}`, // Replace with the correct URL to your Java EE servlet
             data: {
                 login: email,
                 password: password
             },
             success: function(response) {
+                $('#error-message').empty();
+
+                var propertyNames = Object.keys(response);
                 console.log(response)
                 if(response.connexion === true){
-                    window.location.href = 'demandeDeCours.html'
-                    console.log(`Authentication : ${response.eleve}`)
+                    if(propertyNames[1] === "eleve"){
+                        window.location.href = 'demandeDeCours.html'
+                        console.log(`Authentication : ${response.eleve}`)
+                    }
+                    else if (propertyNames[1] === "intervenant"){
+                        console.log(`Intervenant ${response.intervenant.prenom} connecté`);
+                    }
                 }
                 else{
                     var errorMessage = $('<p>').text('Mauvais email ou mot de passe').css('color', 'var(--bs-warning)');

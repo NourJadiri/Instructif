@@ -39,9 +39,9 @@ public class Intervenant implements Serializable {
     private String email;
     private String motDePasse;
     @ManyToMany
-    private List<Niveau> niveau = new ArrayList();
+    private List<Niveau> niveau = new ArrayList<>();
     @OneToMany(mappedBy="intervenant")
-    private List<Cours> cours = new ArrayList();
+    private List<Cours> cours = new ArrayList<>();
     @OneToOne
     private Cours coursActuel;
     @Version

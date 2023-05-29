@@ -1,9 +1,10 @@
-package com.example.servlets;
+package views;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import metiers.Eleve;
+import views.Serialisation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class ProfilUtilisateurSerialisation extends Serialisation{
+public class ProfilEleveSerialisation extends Serialisation {
     @Override
     public void serialize(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JsonObject container = new JsonObject();
@@ -36,8 +37,7 @@ public class ProfilUtilisateurSerialisation extends Serialisation{
             jsonEleve.add("etablissement",jsonEtablissement);
         }
 
-        String operation = request.getParameter("todo");
-        container.addProperty(operation, success);
+        container.addProperty("connexion", success);
 
         container.add("eleve",jsonEleve);
 
