@@ -1,6 +1,9 @@
 package com.example.servlets;
 
 import dao.JpaUtil;
+import views.DemanderCoursSerialisation;
+import views.MatiereSerialisation;
+import views.ProfilEleveSerialisation;
 
 import java.io.*;
 import javax.servlet.ServletException;
@@ -24,17 +27,25 @@ public class ActionServlet extends HttpServlet {
         String todo = request.getParameter("todo");
         System.out.println("Trace : todo = " + todo);
         switch(todo){
-            case "connexion":
+            case "connexion-eleve":
                 new AuthentifierEleveAction().execute(request);
-                new ProfilUtilisateurSerialisation().serialize(request,response);
+                new ProfilEleveSerialisation().serialize(request,response);
                 break;
             case "inscription":
                 new InscriptionEleveAction().execute(request);
-                new ProfilUtilisateurSerialisation().serialize(request, response);
+                new ProfilEleveSerialisation().serialize(request, response);
                 break;
             case "stats":
                 new StatsAction().execute(request);
                 new StatsSerialisation().serialize(request, response);
+                break;
+            case "afficher-matieres":
+                new DemanderCoursAction().listMatiere(request);//changer pour une fonction de la classe ou changer de classe
+                new MatiereSerialisation().serialize(request,response);
+                break;
+            case "demande-de-cours":
+                new DemanderCoursAction().execute(request);
+                new DemanderCoursSerialisation().serialize(request,response);
                 break;
         }
     }
