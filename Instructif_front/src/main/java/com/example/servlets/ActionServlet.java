@@ -4,6 +4,8 @@ import dao.JpaUtil;
 import views.DemanderCoursSerialisation;
 import views.MatiereSerialisation;
 import views.ProfilEleveSerialisation;
+import views.ProfilEnseignantSerialisation;
+import views.StatsSerialisation;
 
 import java.io.*;
 import javax.servlet.ServletException;
@@ -30,6 +32,10 @@ public class ActionServlet extends HttpServlet {
             case "connexion-eleve":
                 new AuthentifierEleveAction().execute(request);
                 new ProfilEleveSerialisation().serialize(request,response);
+                break;
+            case "connexion-enseignant":
+                new AuthentifierEnseignantAction().execute(request);
+                new ProfilEnseignantSerialisation().serialize(request, response);
                 break;
             case "inscription":
                 new InscriptionEleveAction().execute(request);

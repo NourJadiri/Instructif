@@ -26,13 +26,13 @@ public class ProfilEnseignantSerialisation extends Serialisation{
         String intervenantString;
         boolean success = !(intervenant == null);
 
+        container.addProperty("connexion", success);
         if(intervenant != null){
             intervenantString = gson.toJson(intervenant);
             JsonObject jsonIntervenant = JsonParser.parseString(intervenantString).getAsJsonObject();
             container.add("intervenant", jsonIntervenant);
         }
 
-        container.addProperty("connexion", success);
 
         // On ecrit sur le flux de sortie
         PrintWriter out = this.getWriter(response);
