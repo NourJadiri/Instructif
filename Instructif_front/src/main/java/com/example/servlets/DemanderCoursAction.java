@@ -15,19 +15,21 @@ public class DemanderCoursAction extends Action{
 
     @Override
     public void execute(HttpServletRequest request) {
-        Long matiereId = null;
+
         HttpSession session = request.getSession(false);
         Eleve eleve = (Eleve) session.getAttribute("eleve");
-        System.out.println(eleve.toString());
+
+        System.out.println(eleve);
+
         String matiere = request.getParameter("matiere");
         String message = request.getParameter("message");
+
         List<Matiere> matieres = sc.toutesMatiere();
-        for (Matiere m : matieres) {
-            if (m.getNomMatiere().equals(matiere)){
-                matiereId = m.getId();
-            }
-        }
+
+        Long matiereId = Long.parseLong(matiere);
+
         Cours cours = sc.effectuerDemandeCours(eleve, matiereId, message);
+        
         if (cours != null) {
             session.setAttribute("cours",cours);
         } else {

@@ -58,8 +58,6 @@ public class Eleve {
     protected Eleve() {
     }
 
-    
-
     public Long getId() {
         return id;
     }

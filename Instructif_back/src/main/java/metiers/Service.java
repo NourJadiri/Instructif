@@ -59,6 +59,7 @@ public class Service {
         return l;
     }
 
+
     public long compterCoursDuJours() {
         CoursDao cDao = new CoursDao();
         long count = -1;

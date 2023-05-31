@@ -48,7 +48,6 @@ public class Cours implements Serializable {
         this.date =c.getTime(); 
         this.commentaire= com;
         this.intervenant = intervenant;
-        
 
     }
 
@@ -59,8 +58,6 @@ public class Cours implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-  
 
     public Matiere getMatiere() {
         return matiere;
