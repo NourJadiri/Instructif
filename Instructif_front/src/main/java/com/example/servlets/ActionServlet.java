@@ -37,6 +37,9 @@ public class ActionServlet extends HttpServlet {
                 new CoursIntervenantEnAttente().execute(request);
                 new CoursEnAttenteSerialisation().serialize(request, response);
                 break;
+            case "historique-intervenant":
+                new HistoriqueIntervenantSerialisation().serialize(request, response);
+                break;
             case "inscription":
                 new InscriptionEleveAction().execute(request);
                 new ProfilEleveSerialisation().serialize(request, response);

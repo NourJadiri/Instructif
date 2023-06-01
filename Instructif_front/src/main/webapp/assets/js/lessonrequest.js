@@ -1,31 +1,32 @@
 $(document).ready(function() {
 
-    if (window.location.href === "http://localhost:8080/Instructif_front_war/demandeDeCours.html"){
-        $.ajax({
-            type: 'POST',
-            url: `action-servlet?todo=afficher-matieres`, // Replace with the correct URL to your Java EE servlet
-            success: function(response) {
-                $('#error-message').empty();
-                //console.log(window.location.href);
-                var matieres = document.getElementById("optionsList");
-                response.matieres.forEach(function (matiere){
-                    var option = document.createElement('option');
-                    option.innerHTML = matiere.nom;
-                    matieres.append(option);
-                })
-            },
-            error: function() {
-                // Handle any errors that occur during the AJAX request
-                console.log("Erreur dans l'affichage des matieres");
-            }
-        });
-    }
+    $.ajax({
+        type: 'GET',
+        url: `action-servlet?todo=afficher-matieres`,
+        dataType: "json",
+
+        success: function(response) {
+            $('#error-message').empty();
+            //console.log(window.location.href);
+            var matieres = document.getElementById("optionsList");
+
+            response.matieres.forEach(function (matiere){
+                var option = $('<option></option>').val(matiere.id).html(matiere.nom);
+                $('#optionsList').append(option);
+            })
+        },
+        error: function() {
+            // Handle any errors that occur during the AJAX request
+            console.log("Erreur dans l'affichage des matieres");
+        }
+    });
 
     $("#bouton-demande").click(function (e) {
         e.preventDefault();
         var matiere = document.getElementById("optionsList").value;
         var message = document.getElementById("message").value;
         console.log(matiere, message)
+
         $.ajax({
             type: "POST",
             url: `action-servlet?todo=demande-de-cours`,
@@ -48,6 +49,8 @@ $(document).ready(function() {
                     bouton.value = "raccrocher";
                     document.getElementById("visio").appendChild(bouton);
                     // rendre le bouton et les zones de textes non cliquable pendant une consultation
+                    $("#bouton-demande").prop("disabled",true);
+                    $("#message").prop("disabled",true);
                 }
                 else {
                     document.getElementById("formulaire").innerHTML += "Aucun Enseignant n'est disponible pour le moment, merci de réessayer dans 15 minutes"
