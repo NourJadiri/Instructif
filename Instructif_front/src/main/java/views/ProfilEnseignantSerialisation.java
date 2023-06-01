@@ -23,14 +23,19 @@ public class ProfilEnseignantSerialisation extends Serialisation{
         JsonObject container = new JsonObject();
 
         Intervenant intervenant = (Intervenant) session.getAttribute("intervenant");
-        String intervenantString;
+
         boolean success = !(intervenant == null);
 
         container.addProperty("connexion", success);
+
         if(intervenant != null){
-            intervenantString = gson.toJson(intervenant);
-            JsonObject jsonIntervenant = JsonParser.parseString(intervenantString).getAsJsonObject();
-            container.add("intervenant", jsonIntervenant);
+            JsonObject intervenantJson = new JsonObject();
+            intervenantJson.addProperty("id", intervenant.getId());
+            intervenantJson.addProperty("prenom", intervenant.getPrenom());
+            intervenantJson.addProperty("nom", intervenant.getNom());
+            intervenantJson.addProperty("estDisponible", intervenant.isEstDisponible());
+
+            container.add("intervenant", intervenantJson);
         }
 
 

@@ -1,11 +1,7 @@
 package com.example.servlets;
 
 import dao.JpaUtil;
-import views.DemanderCoursSerialisation;
-import views.MatiereSerialisation;
-import views.ProfilEleveSerialisation;
-import views.ProfilEnseignantSerialisation;
-import views.StatsSerialisation;
+import views.*;
 
 import java.io.*;
 import javax.servlet.ServletException;
@@ -36,6 +32,10 @@ public class ActionServlet extends HttpServlet {
             case "connexion-enseignant":
                 new AuthentifierEnseignantAction().execute(request);
                 new ProfilEnseignantSerialisation().serialize(request, response);
+                break;
+            case "espace-intervenant":
+                new CoursIntervenantEnAttente().execute(request);
+                new CoursEnAttenteSerialisation().serialize(request, response);
                 break;
             case "inscription":
                 new InscriptionEleveAction().execute(request);

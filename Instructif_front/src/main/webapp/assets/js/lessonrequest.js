@@ -6,12 +6,10 @@ $(document).ready(function() {
             url: `action-servlet?todo=afficher-matieres`, // Replace with the correct URL to your Java EE servlet
             success: function(response) {
                 $('#error-message').empty();
-                console.log(response);
                 //console.log(window.location.href);
-                var matieres = $('#optionsList');
-                response.matieres.forEach(function (matiere) {
+                var matieres = document.getElementById("optionsList");
+                response.matieres.forEach(function (matiere){
                     var option = document.createElement('option');
-                    option.setAttribute("value", matiere.id);
                     option.innerHTML = matiere.nom;
                     matieres.append(option);
                 })
@@ -25,11 +23,9 @@ $(document).ready(function() {
 
     $("#bouton-demande").click(function (e) {
         e.preventDefault();
-
         var matiere = document.getElementById("optionsList").value;
         var message = document.getElementById("message").value;
         console.log(matiere, message)
-
         $.ajax({
             type: "POST",
             url: `action-servlet?todo=demande-de-cours`,
@@ -40,43 +36,18 @@ $(document).ready(function() {
             success: function (response){
                 $('#error-message').empty();
                 console.log(response.cours)
-
-                if (response.cours != null) {
+                if (response.cours!=null) {
                     var img = document.createElement("img");
                     img.src = "assets/img/products/1.jpg";
                     img.alt = "ayayaya"
-
-                    $('#visio').empty();
-
-                    $("#visio").append(img);
-
-                    var intervenantNameDiv = document.createElement("div");
-                    $(intervenantNameDiv).css(
-                        {
-                            "margin-right": "10%",
-                            "margin-left": "10%",
-                        }
-                    )
-
-                    var intervenantInfo = $("<p>");
-
-                    $(intervenantInfo).val( `${response.cours.intervenant.prenom} ${response.cours.intervenant.nom}`);// changer par nom + prenom de l'intervenant
-
-                    $(intervenantInfo).addClass("text-center fw-bold text-success mb-2");
-                    $(intervenantNameDiv).append($(intervenantInfo));
-
-                    // On vide la div visio
-
-                    $("#visio").append($(intervenantNameDiv));
-
+                    document.getElementById("visio").innerHTML = response.cours.intervenant ;// changer par nom + prenom de l'intervenant
+                    document.getElementById("visio").appendChild(img);
                     console.log(response.cours.intervenant)
 
-                    var bouton = document.createElement("button");
+                    var bouton = document.createElement("button")
                     bouton.value = "raccrocher";
                     document.getElementById("visio").appendChild(bouton);
-
                     // rendre le bouton et les zones de textes non cliquable pendant une consultation
-                    $('#optionsList, #message, button[type="submit"]').prop('disabled', true);
                 }
                 else {
                     document.getElementById("formulaire").innerHTML += "Aucun Enseignant n'est disponible pour le moment, merci de réessayer dans 15 minutes"
@@ -89,8 +60,5 @@ $(document).ready(function() {
     })
 
 
-function checkForCours(){
-
-}
 
 });
