@@ -40,6 +40,9 @@ public class ActionServlet extends HttpServlet {
             case "historique-intervenant":
                 new HistoriqueIntervenantSerialisation().serialize(request, response);
                 break;
+            case "historique-eleve":
+                new HistoriqueEleveSerialisation().serialize(request,response);
+                break;
             case "inscription":
                 new InscriptionEleveAction().execute(request);
                 new ProfilEleveSerialisation().serialize(request, response);
@@ -56,6 +59,13 @@ public class ActionServlet extends HttpServlet {
                 new DemanderCoursAction().execute(request);
                 new DemanderCoursSerialisation().serialize(request,response);
                 break;
+            case "terminerVisio":
+                new TerminerVisioAction().execute(request);
+                new TerminerVisioSerialisation().serialize(request,response);
+                break;
+            case "noterCours":
+                new NoterCoursAction().execute(request);
+                new NoterCoursSerialisation().serialize(request,response);
         }
     }
 
