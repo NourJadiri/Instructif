@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/Footer-Clean-icons.css">
     <link rel="stylesheet" href="assets/css/Hero-Clean-Reverse-images.css">
-    <link rel="stylesheet" href="assets/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -22,7 +21,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="#" style="color: var(--bs-navbar-active-color);border-color: rgba(0,0,0,0);"><strong>Demande de soutien</strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="historique-eleve.html">Historique de vos cours</a></li>
-                </ul><span class="shadow d-flex justify-content-center align-items-center navbar-text bs-icon-sm bs-icon-circle bs-icon-primary navbar-text me-2 bs-icon"><i class="fa fa-gear"></i></span>
+                </ul><span class="shadow d-flex justify-content-center align-items-center navbar-text navbar-text bs-icon-sm bs-icon-circle bs-icon-primary navbar-text me-2 bs-icon"><i class="fa fa-gear"></i></span>
             </div>
         </div>
     </nav>
@@ -33,9 +32,53 @@
             </div>
         </div>
     </div>
+    <div class="modal fade modal-lg" role="dialog" tabindex="-1" id="note">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Evaluation de votre séance</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Avez-vous appris quelque chose</p>
+                    <div class="row etoiles">
+                        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center">
+                            <button class="btn btn-primary" id="pasCompris" type="button" style="background: rgba(55,99,244,0);padding-right: 5px;padding-left: 5px;border-width: 0px;" value="1">
+                                <i class="far fa-star" style="font-size: 40px;color: rgb(0,0,0);"></i>
+                            </button>
+                            <p>J'ai pas compris</p>
+                        </div>
+                        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center">
+                            <button class="btn btn-primary" id="peutMieuxFaire" type="button" style="background: rgba(55,99,244,0);padding-right: 5px;padding-left: 5px;border-width: 0px;" value="2">
+                                <i class="far fa-star etoile" style="font-size: 40px;color: rgb(0,0,0);"></i>
+                            </button>
+                            <p>Peut mieux faire</p>
+                        </div>
+                        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center"><button class="btn btn-primary" id="moyen" type="button" style="background: rgba(55,99,244,0);padding-right: 5px;padding-left: 5px;border-width: 0px;" value="3">
+                            <i class="far fa-star etoile" style="font-size: 40px;color: rgb(0,0,0);"></i>
+                        </button>
+                            <p>Moyen</p>
+                        </div>
+                        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center">
+                            <button class="btn btn-primary" id="caMaAide" type="button" style="background: rgba(55,99,244,0);padding-right: 5px;padding-left: 5px;border-width: 0px;" value="4">
+                                <i class="far fa-star etoile" style="font-size: 40px;color: rgb(0,0,0);"></i>
+                            </button>
+                            <p>Ca m'a aidé</p>
+                        </div>
+                        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center">
+                            <button class="btn btn-primary" id="toutCompris" type="button" style="background: rgba(55,99,244,0);padding-right: 5px;padding-left: 5px;border-width: 0px;" value="5">
+                                <i class="far fa-star etoile" style="font-size: 40px;color: rgb(0,0,0);"></i>
+                            </button>
+                            <p>J'ai tout compris</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-primary" id="envoyernote" type="button">Envoyer</button></div>
+            </div>
+        </div>
+    </div>
     <section id="formulaire">
         <section class="py-4 py-xl-5">
-            <dialog id="notation">
+           <!-- <dialog id="notation">
                 <div>
                     <span>Evaluation de votre Séance</span>
                     <button type="button" id="quitter" value="croix"><a href="historique-eleve.html">Croix</a></button>
@@ -57,15 +100,15 @@
                         <button type="button" id="envoyernote"><a href="historique-eleve.html">Envoyer</a></button>
                     </div>
                 </div>
-            </dialog>
+            </dialog>-->
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
                         <div class="card mb-5">
                             <div class="card-body p-sm-5">
                                 <form method="post">
-                                    <div class="mb-3"><select class="form-select form-select" id="optionsList"></select></div>
-                                    <div class="mb-3"><textarea class="form-control form-control" id="message" name="message" rows="6" placeholder="Message"></textarea></div>
+                                    <div class="mb-3"><select class="form-select form-select form-select" id="optionsList"></select></div>
+                                    <div class="mb-3"><textarea class="form-control form-control form-control" id="message" name="message" rows="6" placeholder="Message"></textarea></div>
                                     <div><button class="btn btn-primary d-block w-100" id="bouton-demande" type="submit">Faire une demande</button></div>
                                 </form>
                             </div>
@@ -77,17 +120,12 @@
                             <h3 class="text-center"><strong>Vous n'avez pas de soutien en cours</strong></h3>
                             <p class="fw-bold text-center text-success mb-2">Utilisez le formulaire à gauche pour faire une demande</p>
                         </div>
-                        <div id="visio" class="visually-hidden" style="width: 100%;height: 100%;"><img width="100" height="80" style="width: 100%;height: 90%;" src="assets/img/products/1.jpg">
+                        <div class="visually-hidden" id="visio" style="width: 100%;height: 100%;"><img width="100" height="80" style="width: 100%;height: 90%;" src="assets/img/products/1.jpg">
                             <div class="row" style="height: 10%;">
                                 <div class="col d-xl-flex justify-content-xl-center align-items-xl-center" style="padding-top: 0px;height: 100%;">
-                                    <p class="d-xl-flex justify-content-xl-center text-success fw-bold" id="infoIntervenant" style="margin-top: 0px;margin-bottom: 0px;">NOM_INTERVENANT</p>
+                                    <p class="fw-bold text-success d-xl-flex justify-content-xl-center" id="infoIntervenant" style="margin-top: 0px;margin-bottom: 0px;">NOM_INTERVENANT</p>
                                 </div>
-                                <div class="col d-xl-flex justify-content-xl-center align-items-xl-center" style="padding-top: 0px;height: 100%;">
-                                    <a id="bouton_raccrocher">
-                                        <span class="shadow d-flex justify-content-center align-items-center bs-icon-sm bs-icon-circle bs-icon-primary me-2 bs-icon" style="background: var(--bs-red);"><i class="fas fa-phone-slash"></i>
-                                        </span>
-                                    </a>
-                                </div>
+                                <div class="col d-xl-flex justify-content-xl-center align-items-xl-center" style="padding-top: 0px;height: 100%;"><a id="bouton-raccrocher"><span class="shadow d-flex justify-content-center align-items-center bs-icon-sm bs-icon-circle bs-icon-primary me-2 bs-icon" style="background: var(--bs-red);"><i class="fas fa-phone-slash"></i></span></a></div>
                             </div>
                         </div>
                     </div>
@@ -101,17 +139,17 @@
             <div class="d-flex justify-content-between align-items-center pt-3">
                 <p class="text-muted mb-0" style="margin-left: 5%;">Copyright © 2023 INSTRUCT'IF</p>
                 <ul class="list-inline mb-0">
-                    <li class="list-inline-item list-inline-item list-inline-item"></li>
-                    <li class="list-inline-item list-inline-item list-inline-item"></li>
-                    <li class="list-inline-item list-inline-item list-inline-item"></li>
+                    <li class="list-inline-item list-inline-item list-inline-item list-inline-item"></li>
+                    <li class="list-inline-item list-inline-item list-inline-item list-inline-item"></li>
+                    <li class="list-inline-item list-inline-item list-inline-item list-inline-item"></li>
                 </ul>
             </div>
         </div>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bold-and-bright.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="assets/js/lessonrequest.js"></script>
+    </footer>
 </body>
 
 </html>

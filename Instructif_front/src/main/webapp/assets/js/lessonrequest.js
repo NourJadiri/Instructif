@@ -61,8 +61,8 @@ $(document).ready(function() {
     });
 
 
-    $("#bouton_raccrocher").click(function(){
-        terminerVisio()
+    $("#bouton-raccrocher").click(function(){
+        terminerVisio();
     });
 
 });
@@ -128,12 +128,27 @@ function terminerVisio(){
         success: function (response) {
             $('#error-message').empty();
             console.log(response);
-            let notation = $("#notation")
-            notation.show();
-            let note;
-            const etoiles = $(".etoiles");
+
+            $("#note").removeClass("visually-hidden");
+            $("#note").modal('show');
+
+            const etoiles = $(".etoiles .col button");
+
             etoiles.each(function(){
+                $(this).hover(
+                    function(){
+                        $(this).prevAll().children().removeClass("far").addClass("fas");
+                        $(this).children().removeClass("far").addClass("fas");
+                    },
+                    function(){
+                        $(this).prevAll().children().removeClass("fas").addClass("far");
+                        $(this).children().removeClass("fas").addClass("far");
+                    }
+                )
+
                 $(this).click(function () {
+                    $(this).prevAll().children().removeClass("far").addClass("fas");
+                    $(this).children().removeClass("far").addClass("fas");
                     note = $(this)[0].value;
                     console.log(note);
                 })
@@ -145,7 +160,8 @@ function terminerVisio(){
                     url: `action-servlet?todo=noterCours`,
                     data: { note : note },
                     success: function (response) {
-
+                        $("#note").modal('hide');
+                        location.reload();
                     },
                     error: function (){
                         console.log("Erreur lors de la notation")
