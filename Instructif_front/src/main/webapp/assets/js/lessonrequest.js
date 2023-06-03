@@ -134,20 +134,21 @@ function terminerVisio(){
 
             const etoiles = $(".etoiles .col button");
 
+            // TODO: trouver un moyen de select tous les boutons jusqu'a celui qu'on hover
             etoiles.each(function(){
                 $(this).hover(
                     function(){
-                        $(this).prevAll().children().removeClass("far").addClass("fas");
+                        $(this).prevUntil().children().removeClass("far").addClass("fas");
                         $(this).children().removeClass("far").addClass("fas");
                     },
                     function(){
-                        $(this).prevAll().children().removeClass("fas").addClass("far");
+                        $(this).prevUntil().children().removeClass("fas").addClass("far");
                         $(this).children().removeClass("fas").addClass("far");
                     }
                 )
 
                 $(this).click(function () {
-                    $(this).prevAll().children().removeClass("far").addClass("fas");
+                    $(this).prevUntil().children().removeClass("far").addClass("fas");
                     $(this).children().removeClass("far").addClass("fas");
                     note = $(this)[0].value;
                     console.log(note);
