@@ -9,10 +9,12 @@ public class AuthentifierEnseignantAction extends Action{
     @Override
     public void execute(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
+
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
         Intervenant intervenant = sc.authentificationIntervenant(login, password);
+
 
         if(intervenant != null){
             session.setAttribute("intervenant", intervenant);
