@@ -1,27 +1,8 @@
 $(document).ready(function() {
 
-    $.ajax({
-        type: 'GET',
-        url: `action-servlet?todo=afficher-matieres`,
-        dataType: "json",
+    initMatieres().then(infosCoursEnAttente);
 
-        success: function(response) {
-            $('#error-message').empty();
-            //console.log(window.location.href);
-            var matieres = document.getElementById("optionsList");
-
-            response.matieres.forEach(function (matiere){
-                var option = $('<option></option>').val(matiere.id).html(matiere.nom);
-                $('#optionsList').append(option);
-            })
-        },
-        error: function() {
-            // Handle any errors that occur during the AJAX request
-            console.log("Erreur dans l'affichage des matieres");
-        }
-    });
-
-    $("#bouton-demande").click(function (e) {
+/*    $("#bouton-demande").click(function (e) {
         e.preventDefault();
         let matiere = document.getElementById("optionsList").value;
         let message = document.getElementById("message").value;
@@ -37,46 +18,26 @@ $(document).ready(function() {
             success: function (response){
                 $('#error-message').empty();
                 console.log(response.cours)
+
                 if (response.cours != null) {
+
+                    cours = response.cours;
+
+                    // On stock en local l'id du cours actuel
                     localStorage.setItem('cours_actuel_id', response.cours.id)
-                    let img = document.createElement("img");
-                    img.src = "assets/img/products/1.jpg";
-                    img.alt = "ayayaya"
 
-                    $('#visio').empty();
-
-                    $(`#visio`).append(img);
-
-                    let bouton = document.createElement("button");
-                    bouton.value = "raccrocher";
-                    bouton.id = "bouton_raccrocher";
-                    bouton.innerText = "Test";
-                    document.getElementById("visio").appendChild(bouton);
-                    let intervenantNameDiv = document.createElement("div");
-
-                    $(intervenantNameDiv).css(
-                        {
-                            "margin-right": "10%",
-                            "margin-left": "10%",
-                        }
-                    )
-                    let intervenantInfo = document.createElement('p')
+                    // On renseigne les infos de l'intervenant dans le champ concerné
+                    let intervenantInfo = $("#infoIntervenant");
                     intervenantInfo.innerText = response.cours.intervenant.prenom + " " + response.cours.intervenant.nom
-                    $(intervenantInfo).addClass("text-center fw-bold text-success mb-2");
 
-                    $(intervenantNameDiv).append($(intervenantInfo));
-                    // On vide la div visio
-
-                    $("#visio").append($(intervenantNameDiv));
-
+                    // On stock les infos de l'intervenant en local
                     localStorage.setItem("nomIntervenant", response.cours.intervenant.nom)
-
-
                     localStorage.setItem("prenomIntervenant", response.cours.intervenant.prenom)
 
                     // rendre le bouton et les zones de textes non cliquable pendant une consultation
                     $("#bouton-demande").prop("disabled",true);
                     $("#message").prop("disabled",true);
+
                     terminerVisio();
                 }
                 else {
@@ -87,95 +48,179 @@ $(document).ready(function() {
                 console.log("Echec de la demande")
             }
         })
-    })
-    checkForCours()
-    terminerVisio()
+    })*/
+    $("#bouton-demande").click(function(e){
+        e.preventDefault();
+
+        var data = {
+            matiere: document.getElementById("optionsList").value,
+            message: document.getElementById("message").value
+        }
+
+        demandeCours(data);
+    });
+
+
+    $("#bouton_raccrocher").click(function(){
+        terminerVisio()
+    });
 
 });
+
+function initMatieres(){
+    return $.ajax({
+        type: 'GET',
+        url: `action-servlet?todo=afficher-matieres`,
+        dataType: "json",
+
+        success: function(response) {
+            $('#error-message').empty();
+
+            response.matieres.forEach(function (matiere){
+                var option = $('<option></option>').val(matiere.id).html(matiere.nom);
+                $('#optionsList').append(option);
+            })
+        },
+        error: function() {
+            // Handle any errors that occur during the AJAX request
+            console.log("Erreur dans l'affichage des matieres");
+        }
+    });
+}
+function initializeVariables(response) {
+    let matiere = document.getElementById("optionsList").value;
+    let message = document.getElementById("message").value;
+
+    return {
+        matiere: matiere,
+        message: message,
+        response: response
+    };
+}
 function checkForCours() {
+    // On verifie si l'élève a déjà un cours en cours
     let cours_actuel_id = localStorage.getItem('cours_actuel_id')
+
     console.log(cours_actuel_id)
+
     if (cours_actuel_id != null) {
-        let img = document.createElement("img");
-        img.src = "assets/img/products/1.jpg";
-        img.alt = "ayayaya"
-
-        $('#visio').empty();
-
-        $(`#visio`).append(img);
-
-        let bouton_raccrocher = document.createElement("button");
-        bouton_raccrocher.value = "raccrocher";
-        bouton_raccrocher.id = "bouton_raccrocher"
-        bouton_raccrocher.innerText = "Test";
-
         // il faut rajouter un eleme,t d'image
+        $("#noVisio").addClass("visually-hidden");
 
-        document.getElementById("visio").appendChild(bouton_raccrocher);
+        $("#visio").removeClass("visually-hidden");
 
         let nomIntervenant = localStorage.getItem("nomIntervenant");
         let prenomIntervenant = localStorage.getItem("prenomIntervenant");
 
-        let intervenantNameDiv = document.createElement("div");
-
-        $(intervenantNameDiv).css(
-            {
-                "margin-right": "10%",
-                "margin-left": "10%",
-            }
-        )
-        let intervenantInfo = document.createElement('p')
-
-        intervenantInfo.innerText = prenomIntervenant + " " + nomIntervenant
-        $(intervenantInfo).addClass("text-center fw-bold text-success mb-2");
-
-        $(intervenantNameDiv).append($(intervenantInfo));
-        // On vide la div visio
-
-        $("#visio").append($(intervenantNameDiv));
+        $("#noVisio").addClass("visually-hidden");
+        $("#infoIntervenant").html(`${cours.intervenant.prenom} ${cours.intervenant.nom}`);
+        $("#visio").removeClass("visually-hidden");
 
         // rendre le bouton et les zones de textes non cliquable pendant une consultation
         $('#optionsList, #message, button[type="submit"]').prop('disabled', true);
     }
 }
-
 function terminerVisio(){
-    $("#bouton_raccrocher").click(function () {
-        $.ajax({
-            type: 'POST',
-            url: `action-servlet?todo=terminerVisio`,
-            success: function (response) {
-                $('#error-message').empty();
-                console.log(response);
-                let notation = $("#notation")
-                notation.show();
-                let note;
-                const etoiles = $(".etoiles");
-                etoiles.each(function(){
-                    $(this).click(function () {
-                        note = $(this)[0].value;
-                        console.log(note);
-                    })
-                });
-                $('#envoyernote').click(function (){
-                    $.ajax({
-                        type:'POST',
-                        url: `action-servlet?todo=noterCours`,
-                        data: { note : note },
-                        success: function (response) {
 
-                        },
-                        error: function (){
-                            console.log("Erreur lors de la notation")
-                        }
-                    })
+    return $.ajax({
+        type: 'POST',
+        url: `action-servlet?todo=terminerVisio`,
+        success: function (response) {
+            $('#error-message').empty();
+            console.log(response);
+            let notation = $("#notation")
+            notation.show();
+            let note;
+            const etoiles = $(".etoiles");
+            etoiles.each(function(){
+                $(this).click(function () {
+                    note = $(this)[0].value;
+                    console.log(note);
                 })
-            },
-            error: function () {
-                // Handle any errors that occur during the AJAX request
-                console.log("Erreur lors de la fin du cours");
-            }
-        })
-        localStorage.clear()
+            });
+
+            $('#envoyernote').click(function (){
+                $.ajax({
+                    type:'POST',
+                    url: `action-servlet?todo=noterCours`,
+                    data: { note : note },
+                    success: function (response) {
+
+                    },
+                    error: function (){
+                        console.log("Erreur lors de la notation")
+                    }
+                })
+            })
+        },
+        error: function () {
+            // Handle any errors that occur during the AJAX request
+            console.log("Erreur lors de la fin du cours");
+        }
     })
+
+}
+
+function infosCoursEnAttente(){
+    return $.ajax({
+        method: "GET",
+        url: "action-servlet?todo=espace-eleve",
+        dataType: "json",
+
+        success: function(response){
+            console.log(response);
+            const cours = response.eleve.cours;
+
+            console.log(cours);
+
+            if(!isJsonObjectEmpty(cours)){
+                $("#optionsList").val(cours.matiere.id);
+                lockDemande(cours.message);
+                displayVisio(cours.intervenant.prenom, cours.intervenant.nom);
+            }
+        },
+        error: function(){
+            console.log("ono :(");
+        }
+    })
+}
+
+function demandeCours(data){
+    return $.ajax({
+            method: "POST",
+            url: "action-servlet?todo=demande-de-cours",
+            data: {
+                matiere: data.matiere,
+                message: data.message
+            },
+            success: function(response){
+                console.log(response.cours);
+                lockDemande(data.message);
+                displayVisio(response.cours.intervenant.prenom, response.cours.intervenant.nom);
+            },
+            error: function(){
+                console.log("yelp..");
+            }
+    });
+}
+
+function lockDemande(message){
+    $("#bouton-demande").prop("disabled", true);
+    $("#message").html(message);
+    $("#message").prop("disabled", true);
+    $('#optionsList').prop('disabled', true);
+}
+function displayVisio(prenom, nom){
+    $("#noVisio").addClass("visually-hidden");
+    $("#infoIntervenant").html(`${prenom} ${nom}`);
+    $("#visio").removeClass("visually-hidden");
+}
+
+function isJsonObjectEmpty(jsonObject) {
+    for (var key in jsonObject) {
+        if (jsonObject.hasOwnProperty(key)) {
+            return false; // The object has at least one property, so it is not empty
+        }
+    }
+    return true; // The object has no properties, indicating it is empty
 }

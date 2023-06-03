@@ -40,6 +40,9 @@ public class ActionServlet extends HttpServlet {
             case "historique-intervenant":
                 new HistoriqueIntervenantSerialisation().serialize(request, response);
                 break;
+            case "espace-eleve":
+                new EspaceEleveSerialisation().serialize(request, response);
+                break;
             case "historique-eleve":
                 new HistoriqueEleveSerialisation().serialize(request,response);
                 break;

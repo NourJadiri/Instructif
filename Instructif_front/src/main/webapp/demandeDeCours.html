@@ -7,24 +7,22 @@
     <title>Home - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/Footer-Clean-icons.css">
     <link rel="stylesheet" href="assets/css/Hero-Clean-Reverse-images.css">
     <link rel="stylesheet" href="assets/css/bootstrap/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-light navbar-expand-md py-3">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon"><i class="fa fa-graduation-cap"></i></span><span><strong>Instruct'IF</strong></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="shadow d-flex justify-content-center align-items-center bs-icon-sm bs-icon-circle bs-icon-primary me-2 bs-icon"><i class="fas fa-graduation-cap"></i></span><span><strong>Instruct'IF</strong></span></a><button data-bs-toggle="collapse" data-bs-target="#navcol-2" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="#" style="color: var(--bs-navbar-active-color);border-color: rgba(0,0,0,0);"><strong>Demande de soutien</strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="historique-eleve.html">Historique de vos cours</a></li>
-                </ul>
-                <span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center navbar-text me-2 bs-icon">
-                    <i class="fa fa-gear"></i>
-                </span>
+                </ul><span class="shadow d-flex justify-content-center align-items-center navbar-text bs-icon-sm bs-icon-circle bs-icon-primary navbar-text me-2 bs-icon"><i class="fa fa-gear"></i></span>
             </div>
         </div>
     </nav>
@@ -37,12 +35,13 @@
     </div>
     <section id="formulaire">
         <section class="py-4 py-xl-5">
-            <dialog id = "notation">
+            <dialog id="notation">
                 <div>
                     <span>Evaluation de votre Séance</span>
                     <button type="button" id="quitter" value="croix"><a href="historique-eleve.html">Croix</a></button>
                     <div>
-                        <span>Avez-vous apris quelque chose ?</span><br>
+                        <span>Avez-vous apris quelque chose ?</span>
+                        <br>
                         <button type="button" value="1" class="etoiles">Je n'ai pas compris</button>
                         <button type="button" value="2" class="etoiles">Peu mieux faire</button>
                         <button type="button" value="3" class="etoiles">Moyen</button>
@@ -65,21 +64,31 @@
                         <div class="card mb-5">
                             <div class="card-body p-sm-5">
                                 <form method="post">
-                                    <div class="mb-3">
-                                        <select class="form-select" id="optionsList">
-                                        </select>
-                                    </div>
-                                    <div class="mb-3"><textarea class="form-control" id="message" name="message" rows="6" placeholder="Message"></textarea></div>
-                                    <div><button id="bouton-demande" class="btn btn-primary d-block w-100" type="submit">Faire une demande</button></div>
+                                    <div class="mb-3"><select class="form-select form-select" id="optionsList"></select></div>
+                                    <div class="mb-3"><textarea class="form-control form-control" id="message" name="message" rows="6" placeholder="Message"></textarea></div>
+                                    <div><button class="btn btn-primary d-block w-100" id="bouton-demande" type="submit">Faire une demande</button></div>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div class="col">
-                        <div id="visio" style="margin-top: 20%;">
+                        <div id="noVisio" style="margin-top: 20%;">
                             <h3 class="text-center"><strong>Bienvenue</strong></h3>
                             <h3 class="text-center"><strong>Vous n'avez pas de soutien en cours</strong></h3>
-                            <p class="text-center fw-bold text-success mb-2">Utilisez le formulaire à gauche pour faire une demande</p>
+                            <p class="fw-bold text-center text-success mb-2">Utilisez le formulaire à gauche pour faire une demande</p>
+                        </div>
+                        <div id="visio" class="visually-hidden" style="width: 100%;height: 100%;"><img width="100" height="80" style="width: 100%;height: 90%;" src="assets/img/products/1.jpg">
+                            <div class="row" style="height: 10%;">
+                                <div class="col d-xl-flex justify-content-xl-center align-items-xl-center" style="padding-top: 0px;height: 100%;">
+                                    <p class="d-xl-flex justify-content-xl-center text-success fw-bold" id="infoIntervenant" style="margin-top: 0px;margin-bottom: 0px;">NOM_INTERVENANT</p>
+                                </div>
+                                <div class="col d-xl-flex justify-content-xl-center align-items-xl-center" style="padding-top: 0px;height: 100%;">
+                                    <a id="bouton_raccrocher">
+                                        <span class="shadow d-flex justify-content-center align-items-center bs-icon-sm bs-icon-circle bs-icon-primary me-2 bs-icon" style="background: var(--bs-red);"><i class="fas fa-phone-slash"></i>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,13 +101,14 @@
             <div class="d-flex justify-content-between align-items-center pt-3">
                 <p class="text-muted mb-0" style="margin-left: 5%;">Copyright © 2023 INSTRUCT'IF</p>
                 <ul class="list-inline mb-0">
-                    <li class="list-inline-item list-inline-item"></li>
-                    <li class="list-inline-item list-inline-item"></li>
-                    <li class="list-inline-item list-inline-item"></li>
+                    <li class="list-inline-item list-inline-item list-inline-item"></li>
+                    <li class="list-inline-item list-inline-item list-inline-item"></li>
+                    <li class="list-inline-item list-inline-item list-inline-item"></li>
                 </ul>
             </div>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bold-and-bright.js"></script>
     <script src="assets/js/lessonrequest.js"></script>

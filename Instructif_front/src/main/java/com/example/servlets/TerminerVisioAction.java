@@ -11,10 +11,18 @@ public class TerminerVisioAction extends Action{
     @Override
     public void execute(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
+        Eleve eleve = (Eleve)session.getAttribute("eleve");
+
         Cours cours = (Cours) session.getAttribute("cours");
+
         System.out.println(cours);
         if (cours != null) {
             sc.terminerVisio(cours);
+            String email = eleve.getMail();
+            String password = eleve.getMotDePasse();
+            eleve = sc.authentificationEleve(email, password);
+            session.setAttribute("eleve", eleve);
         }
+        System.out.println("Fin du cours de " + eleve.getPrenom());
     }
 }

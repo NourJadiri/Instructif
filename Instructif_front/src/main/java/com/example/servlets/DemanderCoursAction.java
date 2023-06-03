@@ -14,7 +14,11 @@ public class DemanderCoursAction extends Action{
     public void execute(HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
+
         Eleve eleve = (Eleve) session.getAttribute("eleve");
+        String mailEleve = eleve.getMail();
+        String motDePasseEleve = eleve.getMotDePasse();
+
 
         System.out.println(eleve);
 
@@ -24,11 +28,15 @@ public class DemanderCoursAction extends Action{
         Long matiereId = Long.parseLong(matiere);
 
         Cours cours = sc.effectuerDemandeCours(eleve, matiereId, message);
-        
+
+        // Update de l'attribut élève
+        eleve = sc.authentificationEleve(mailEleve, motDePasseEleve);
+        session.setAttribute("eleve", eleve);
+
         if (cours != null) {
             session.setAttribute("cours", cours);
         } else {
-            System.out.println("Demande refusé");
+            System.out.println("Demande refusée");
             session.setAttribute("cours", null);
         }
     }

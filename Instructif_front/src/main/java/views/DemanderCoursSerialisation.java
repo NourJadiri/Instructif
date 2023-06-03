@@ -18,9 +18,12 @@ public class DemanderCoursSerialisation extends Serialisation{
 
     @Override
     public void serialize(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         HttpSession session = request.getSession();
         JsonObject container = new JsonObject();
+
         Cours cours = (Cours) session.getAttribute("cours");
+
         if (cours != null) {
             JsonObject coursObj = new JsonObject();
             coursObj.addProperty( "id", cours.getId());
@@ -29,6 +32,7 @@ public class DemanderCoursSerialisation extends Serialisation{
             matiereObj.addProperty("id", cours.getMatiere().getId());
             matiereObj.addProperty("nomMatiere", cours.getMatiere().getNomMatiere());
             coursObj.add("matiere",matiereObj);
+
             JsonObject eleveObj = new JsonObject();
             eleveObj.addProperty("prenom", cours.getEleve().getPrenom());
             eleveObj.addProperty("cours_actuel", cours.getEleve().getCoursActuel().getId());
@@ -36,11 +40,13 @@ public class DemanderCoursSerialisation extends Serialisation{
             coursObj.addProperty("date", cours.getDate().toString());
             coursObj.addProperty("commentaire", cours.getCommentaire());
             coursObj.addProperty("note", cours.getNote());
+
             JsonObject intervenantObj = new JsonObject();
             intervenantObj.addProperty("nom", cours.getIntervenant().getNom());
             intervenantObj.addProperty("prenom", cours.getIntervenant().getPrenom());
             coursObj.add("intervenant", intervenantObj);
             container.add("cours", coursObj);
+
             System.out.println(container);
             PrintWriter out = this.getWriter(response);
             Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
