@@ -133,23 +133,34 @@ function terminerVisio(){
             $("#note").modal('show');
 
             const etoiles = $(".etoiles .col button");
-
+            let isClicked = false;
+            let clickedEtoile = 0;
+            console.log(etoiles);
             // TODO: trouver un moyen de select tous les boutons jusqu'a celui qu'on hover
-            etoiles.each(function(){
-                $(this).hover(
+            etoiles.each(function(index, etoile){
+                $(etoile).hover(
                     function(){
-                        $(this).prevUntil().children().removeClass("far").addClass("fas");
-                        $(this).children().removeClass("far").addClass("fas");
+                        for(let i = clickedEtoile ; i <= index ; i++){
+                            $(etoiles[i]).children().removeClass("far").addClass("fas");
+                        }
                     },
                     function(){
-                        $(this).prevUntil().children().removeClass("fas").addClass("far");
-                        $(this).children().removeClass("fas").addClass("far");
+                        for(let i = 0 ; i <= index ; i++){
+                            $(etoiles[i]).children().removeClass("fas").addClass("far");
+                        }
                     }
                 )
 
-                $(this).click(function () {
-                    $(this).prevUntil().children().removeClass("far").addClass("fas");
-                    $(this).children().removeClass("far").addClass("fas");
+                $(etoile).click(function () {
+                    isClicked = true;
+                    clickedEtoile = index;
+                    console.log(clickedEtoile);
+                    for(let i = 0 ; i <= index ; i++){
+                        $(etoiles[i]).children().removeClass("far").addClass("fas");
+                    }
+                    for(let i = clickedEtoile + 1 ; i < 5 ; i++){
+                        $(etoiles[i]).children().removeClass("fas").addClass("far");
+                    }
                     note = $(this)[0].value;
                     console.log(note);
                 })
