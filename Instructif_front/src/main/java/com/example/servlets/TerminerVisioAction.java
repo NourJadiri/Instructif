@@ -13,9 +13,10 @@ public class TerminerVisioAction extends Action{
         HttpSession session = request.getSession(false);
         Eleve eleve = (Eleve)session.getAttribute("eleve");
 
-        Cours cours = (Cours) session.getAttribute("cours");
+        Cours cours = eleve.getCoursActuel();
 
         System.out.println(cours);
+
         if (cours != null) {
             sc.terminerVisio(cours);
             String email = eleve.getMail();
@@ -23,6 +24,7 @@ public class TerminerVisioAction extends Action{
             eleve = sc.authentificationEleve(email, password);
             session.setAttribute("eleve", eleve);
         }
+
         System.out.println("Fin du cours de " + eleve.getPrenom());
     }
 }

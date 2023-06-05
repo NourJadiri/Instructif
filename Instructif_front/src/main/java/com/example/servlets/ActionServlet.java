@@ -23,6 +23,7 @@ public class ActionServlet extends HttpServlet {
         //System.out.println("TEST Appel au servlet de login");
         response.setContentType("text/html");
         String todo = request.getParameter("todo");
+
         System.out.println("Trace : todo = " + todo);
         switch(todo){
             case "connexion-eleve":
@@ -42,6 +43,12 @@ public class ActionServlet extends HttpServlet {
                 break;
             case "espace-eleve":
                 new EspaceEleveSerialisation().serialize(request, response);
+                break;
+            case "info-eleve":
+                new ProfilEleveSerialisation().serialize(request, response);
+                break;
+            case "info-intervenant":
+                new ProfilEnseignantSerialisation().serialize(request, response);
                 break;
             case "historique-eleve":
                 new HistoriqueEleveSerialisation().serialize(request,response);
@@ -69,6 +76,10 @@ public class ActionServlet extends HttpServlet {
             case "noterCours":
                 new NoterCoursAction().execute(request);
                 new NoterCoursSerialisation().serialize(request,response);
+                break;
+            case "deconnexion":
+                new DeconnexionAction().execute(request);
+                break;
         }
     }
 

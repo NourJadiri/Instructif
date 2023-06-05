@@ -1,11 +1,10 @@
 package views;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+import metiers.Autre;
 import metiers.Eleve;
 import metiers.Intervenant;
+import metiers.Niveau;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +32,30 @@ public class ProfilEnseignantSerialisation extends Serialisation{
             intervenantJson.addProperty("id", intervenant.getId());
             intervenantJson.addProperty("prenom", intervenant.getPrenom());
             intervenantJson.addProperty("nom", intervenant.getNom());
+            intervenantJson.addProperty("email", intervenant.getEmail());
+            intervenantJson.addProperty("telephone", intervenant.getTelephonePro());
             intervenantJson.addProperty("estDisponible", intervenant.isEstDisponible());
+
+            JsonArray niveauArray = new JsonArray();
+
+            for(Niveau n : intervenant.getNiveau()){
+                JsonObject niveauJson = new JsonObject();
+
+                niveauJson.addProperty("id", n.getId());
+                niveauJson.addProperty("nom", n.getNomNiveau());
+
+                niveauArray.add(niveauJson);
+            }
+
+            intervenantJson.add("niveaux", niveauArray);
+
+            if(intervenant instanceof Autre){
+                intervenant = (Autre)intervenant;
+                intervenantJson.addProperty("activite", ((Autre) intervenant).getActivite());
+            }
+            else{
+                intervenantJson.addProperty("activite", intervenant.getClass().getName());
+            }
 
             container.add("intervenant", intervenantJson);
         }
