@@ -21,6 +21,7 @@ public class AuthentifierEleveAction extends Action{
             System.out.println("Echec de l'authentification");
             session.setAttribute("eleve", null);
         }
+        session.setAttribute("operation", "connexion");
 
     }
 

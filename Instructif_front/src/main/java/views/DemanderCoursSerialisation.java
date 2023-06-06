@@ -45,13 +45,14 @@ public class DemanderCoursSerialisation extends Serialisation{
             intervenantObj.addProperty("nom", cours.getIntervenant().getNom());
             intervenantObj.addProperty("prenom", cours.getIntervenant().getPrenom());
             coursObj.add("intervenant", intervenantObj);
-            container.add("cours", coursObj);
 
-            System.out.println(container);
-            PrintWriter out = this.getWriter(response);
-            Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-            gson.toJson(container, out);
-            out.close();
+            container.add("cours", coursObj);
         }
+
+        PrintWriter out = this.getWriter(response);
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+        gson.toJson(container, out);
+        System.out.println(container);
+        out.close();
     }
 }

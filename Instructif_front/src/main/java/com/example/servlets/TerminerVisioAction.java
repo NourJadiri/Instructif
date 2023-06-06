@@ -15,6 +15,8 @@ public class TerminerVisioAction extends Action{
 
         Cours cours = eleve.getCoursActuel();
 
+        session.setAttribute("cours", cours);
+
         System.out.println(cours);
 
         if (cours != null) {

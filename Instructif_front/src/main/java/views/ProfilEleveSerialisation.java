@@ -44,7 +44,8 @@ public class ProfilEleveSerialisation extends Serialisation {
             jsonEleve.add("niveau", jsonNiveau);
         }
 
-        container.addProperty("connexion", success);
+        String operation = (String)session.getAttribute("operation");
+        container.addProperty(operation, success);
 
         container.add("eleve",jsonEleve);
 

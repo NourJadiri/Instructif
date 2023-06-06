@@ -187,10 +187,7 @@ public class Service {
                 ex.printStackTrace();
             }
         } finally {
-            try {
-                JpaUtil.fermerContextePersistance();
-            } catch (Exception ex3) {
-            }
+            JpaUtil.fermerContextePersistance();
         }
 
         return cours;
@@ -248,26 +245,27 @@ public class Service {
 
                 if (result == null) {
                     Message.envoyerMail("rol@moi.com", eleve.getMail(), "Echec d'inscription", "L'inscription est un echec");
+                    return false;
                 }
             }
-            else {
-                String uai = result.get(0);
-                String nom = result.get(1);
-                String nomCommune = result.get(4);
-                double ips = Double.parseDouble(result.get(8));
-                String query = nom + "," + nomCommune;
-                LatLng coordsEtablissement = GeoNetApi.getLatLng(query);
-                Etablissement et = new Etablissement(code, ips, nom, nomCommune, coordsEtablissement.lng, coordsEtablissement.lat);
-                JpaUtil.ouvrirTransaction();
-                if (etDao.findByCode(code).isEmpty()) {
-                    etDao.create(et);
-                }
-                eleve.setEtablissement(etDao.findByCode(code).get(0));
-                elDao.create(eleve);
-                JpaUtil.validerTransaction();
-                etat = true;
-                Message.envoyerMail("rol@moi.com", eleve.getMail(), "Confirmation d'inscription", "L'inscription est un succes");
+            String uai = result.get(0);
+            String nom = result.get(1);
+            String nomCommune = result.get(4);
+            double ips = Double.parseDouble(result.get(8));
+            String query = nom + "," + nomCommune;
+            LatLng coordsEtablissement = GeoNetApi.getLatLng(query);
+
+            Etablissement et = new Etablissement(code, ips, nom, nomCommune, coordsEtablissement.lng, coordsEtablissement.lat);
+            JpaUtil.ouvrirTransaction();
+
+            if (etDao.findByCode(code).isEmpty()) {
+                etDao.create(et);
             }
+            eleve.setEtablissement(etDao.findByCode(code).get(0));
+            elDao.create(eleve);
+            JpaUtil.validerTransaction();
+            etat = true;
+            Message.envoyerMail("rol@moi.com", eleve.getMail(), "Confirmation d'inscription", "L'inscription est un succes");
         } catch (Exception ex) {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();

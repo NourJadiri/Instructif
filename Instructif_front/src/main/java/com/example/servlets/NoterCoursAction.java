@@ -12,8 +12,7 @@ public class NoterCoursAction extends Action{
     public void execute(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
-        Eleve eleve = (Eleve)session.getAttribute("eleve");
-        Cours cours = eleve.getCoursActuel();
+        Cours cours = (Cours)session.getAttribute("cours");
 
         System.out.println(cours);
 

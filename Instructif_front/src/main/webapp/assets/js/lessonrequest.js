@@ -87,39 +87,6 @@ function initMatieres(){
         }
     });
 }
-function initializeVariables(response) {
-    let matiere = document.getElementById("optionsList").value;
-    let message = document.getElementById("message").value;
-
-    return {
-        matiere: matiere,
-        message: message,
-        response: response
-    };
-}
-function checkForCours() {
-    // On verifie si l'élève a déjà un cours en cours
-    let cours_actuel_id = localStorage.getItem('cours_actuel_id')
-
-    console.log(cours_actuel_id)
-
-    if (cours_actuel_id != null) {
-        // il faut rajouter un eleme,t d'image
-        $("#noVisio").addClass("visually-hidden");
-
-        $("#visio").removeClass("visually-hidden");
-
-        let nomIntervenant = localStorage.getItem("nomIntervenant");
-        let prenomIntervenant = localStorage.getItem("prenomIntervenant");
-
-        $("#noVisio").addClass("visually-hidden");
-        $("#infoIntervenant").html(`${cours.intervenant.prenom} ${cours.intervenant.nom}`);
-        $("#visio").removeClass("visually-hidden");
-
-        // rendre le bouton et les zones de textes non cliquable pendant une consultation
-        $('#optionsList, #message, button[type="submit"]').prop('disabled', true);
-    }
-}
 function terminerVisio(){
 
     return $.ajax({
@@ -145,7 +112,7 @@ function terminerVisio(){
                         }
                     },
                     function(){
-                        for(let i = 0 ; i <= index ; i++){
+                        for(let i = clickedEtoile + 1 ; i <= index ; i++){
                             $(etoiles[i]).children().removeClass("fas").addClass("far");
                         }
                     }
@@ -154,7 +121,6 @@ function terminerVisio(){
                 $(etoile).click(function () {
                     isClicked = true;
                     clickedEtoile = index;
-                    console.log(clickedEtoile);
                     for(let i = 0 ; i <= index ; i++){
                         $(etoiles[i]).children().removeClass("far").addClass("fas");
                     }
@@ -223,11 +189,18 @@ function demandeCours(data){
             },
             success: function(response){
                 console.log(response.cours);
-                lockDemande(data.message);
-                displayVisio(response.cours.intervenant.prenom, response.cours.intervenant.nom);
+
+                if(!isJsonObjectEmpty(response)){
+                    displayVisio(response.cours.intervenant.prenom, response.cours.intervenant.nom);
+                    lockDemande(data.message);
+                }
+                else{
+                    $("#alerteIndisponibilite").removeClass("visually-hidden");
+                    console.log("Le cours n'a pas pu être créé");
+                }
             },
             error: function(){
-                console.log("yelp..");
+                console.error("yelp..");
             }
     });
 }

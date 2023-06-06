@@ -31,7 +31,7 @@ $(document).ready(function() {
             url: 'action-servlet?todo=inscription', // Replace with the URL of your servlet endpoint
             data: data,
             success: function(response) {
-                if(response.inscription === 'true'){
+                if(response.inscription === true){
                     console.log(`Inscription effectuée avec succès`)
                     window.location.href = 'login.html'
                 }
@@ -43,7 +43,6 @@ $(document).ready(function() {
             },
             error: function() {
                 // Handle error response from the servlet
-                // For example, show an error message to the user
                 console.log("non")
             }
         });

@@ -24,6 +24,8 @@ public class InscriptionEleveAction extends Action{
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String code = request.getParameter("code");
+
+        System.out.println(request.getParameter("class"));
         Long niveau = Long.parseLong(request.getParameter("class"));
         String date = request.getParameter("date");
 
@@ -43,7 +45,7 @@ public class InscriptionEleveAction extends Action{
             eleve = null;
         }
         session.setAttribute("eleve", eleve);
-
+        session.setAttribute("operation", "inscription");
 
     }
 }

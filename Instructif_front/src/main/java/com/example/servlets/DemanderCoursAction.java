@@ -19,9 +19,6 @@ public class DemanderCoursAction extends Action{
         String mailEleve = eleve.getMail();
         String motDePasseEleve = eleve.getMotDePasse();
 
-
-        System.out.println(eleve);
-
         String matiere = request.getParameter("matiere");
         String message = request.getParameter("message");
 
@@ -39,6 +36,7 @@ public class DemanderCoursAction extends Action{
             System.out.println("Demande refusée");
             session.setAttribute("cours", null);
         }
+
     }
 
     public void listMatiere(HttpServletRequest request){
