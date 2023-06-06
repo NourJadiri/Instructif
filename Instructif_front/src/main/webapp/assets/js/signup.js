@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    initNiveaux();
     // Handle form submission
     $('#bouton-inscription').click(function(event) {
         event.preventDefault(); // Prevent the default form submission
@@ -48,3 +49,28 @@ $(document).ready(function() {
         });
     });
 });
+
+function initNiveaux(){
+    let niveauxList = $("#class");
+
+    $.ajax({
+        type: "GET",
+        url: "action-servlet?todo=afficher-niveaux",
+        dataType: "json",
+
+        success: function(response){
+
+            let niveaux = response.niveaux;
+
+            $.each(niveaux, function(index, niveau){
+                var option = $('<option></option>').val(niveau.id).html(niveau.nom);
+                $('#class').append(option);
+            });
+        },
+
+        error: function(){
+            console.log("Error loading student classes");
+        }
+    })
+
+}

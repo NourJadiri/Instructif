@@ -26,6 +26,10 @@ public class ActionServlet extends HttpServlet {
 
         System.out.println("Trace : todo = " + todo);
         switch(todo){
+            case "afficher-niveaux":
+                new AfficherNiveauxAction().execute(request);
+                new NiveauxSerialisation().serialize(request, response);
+                break;
             case "connexion-eleve":
                 new AuthentifierEleveAction().execute(request);
                 new ProfilEleveSerialisation().serialize(request,response);

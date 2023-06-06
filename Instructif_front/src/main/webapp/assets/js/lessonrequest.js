@@ -101,13 +101,22 @@ function terminerVisio(){
 
             const etoiles = $(".etoiles .col button");
             let isClicked = false;
-            let clickedEtoile = 0;
+            let clickedEtoile = -1;
             console.log(etoiles);
             // TODO: trouver un moyen de select tous les boutons jusqu'a celui qu'on hover
             etoiles.each(function(index, etoile){
                 $(etoile).hover(
                     function(){
-                        for(let i = clickedEtoile ; i <= index ; i++){
+
+                        let startIndex;
+                        if(clickedEtoile < 0 ){
+                            startIndex = 0;
+                        }
+                        else {
+                            startIndex = clickedEtoile;
+                        }
+
+                        for(let i = startIndex ; i <= index ; i++){
                             $(etoiles[i]).children().removeClass("far").addClass("fas");
                         }
                     },
@@ -127,6 +136,7 @@ function terminerVisio(){
                     for(let i = clickedEtoile + 1 ; i < 5 ; i++){
                         $(etoiles[i]).children().removeClass("fas").addClass("far");
                     }
+                    $("#envoyernote").prop("disabled", false);
                     note = $(this)[0].value;
                     console.log(note);
                 })
