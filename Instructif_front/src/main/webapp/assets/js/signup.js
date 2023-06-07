@@ -5,13 +5,19 @@ $(document).ready(function() {
         event.preventDefault(); // Prevent the default form submission
 
         // Retrieve form data
-        var email = $('#email').val();
-        var password = $('#password').val();
-        var firstName = $('#firstName').val();
-        var lastName = $('#lastName').val();
-        var code = $('#code').val();
+        var email = $('#email').val().trim();
+        var password = $('#password').val().trim();
+        var firstName = $('#firstName').val().trim();
+        var lastName = $('#lastName').val().trim();
+        var code = $('#code').val().trim();
         var classId = $('#class').val();
         var dateOfBirth = $('#date').val();
+
+        if(email === '' || password === '' || firstName === '' || lastName === '' || code === '' || dateOfBirth === '')
+        {
+            $("#error-message").empty().append("Tous les champs sont à remplir obligatoirement.");
+            return;
+        }
 
         console.log(`${email} - ${password}`);
 
