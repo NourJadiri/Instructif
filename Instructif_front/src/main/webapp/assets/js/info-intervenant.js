@@ -17,6 +17,7 @@ function fillInfosIntervenant(){
             updateInput($("#nom"), intervenant.nom);
             updateInput($("#email"), intervenant.email);
             updateInput($("#numeroTel"), intervenant.telephone);
+            updateInput($("#activite"), intervenant.activite);
 
             const niveaux = intervenant.niveaux;
 

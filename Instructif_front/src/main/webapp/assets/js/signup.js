@@ -13,15 +13,8 @@ $(document).ready(function() {
         var classId = $('#class').val();
         var dateOfBirth = $('#date').val();
 
-        if(email === '' || password === '' || firstName === '' || lastName === '' || code === '' || dateOfBirth === '')
-        {
-            $("#error-message").empty().append("Tous les champs sont à remplir obligatoirement.");
-            return;
-        }
-
-        console.log(`${email} - ${password}`);
-
         // Create data object
+
         var data = {
             email: email,
             password: password,
@@ -31,6 +24,16 @@ $(document).ready(function() {
             class: classId,
             date: dateOfBirth
         };
+
+        var hasEmptyField = Object.values(data).some(function(value) {
+            return value === '';
+        });
+
+        if(hasEmptyField)
+        {
+            $("#error-message").empty().append("Tous les champs sont à remplir obligatoirement.");
+            return;
+        }
 
         // Send AJAX request to your servlet endpoint
         $.ajax({

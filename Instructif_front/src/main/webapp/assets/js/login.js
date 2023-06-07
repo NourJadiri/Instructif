@@ -12,7 +12,21 @@ $(document).ready(function() {
         var email = $('#login').val();
         var password = $('#password').val();
 
+        var data = {
+            email : email,
+            password : password
+        }
 
+        var hasEmptyField = Object.values(data).some(function(value) {
+            return value === '';
+        });
+
+        if(hasEmptyField)
+        {
+            var errorMessage = $('<p>').text(`Tous les champs sont à remplir obligatoirement`).css('color', 'var(--bs-warning)');
+            $('#error-message').empty().append(errorMessage);
+            return;
+        }
 
         // Create an AJAX request
         $.ajax({
